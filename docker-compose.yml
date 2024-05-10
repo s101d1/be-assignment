@@ -1,0 +1,23 @@
+version: "3"
+services:
+  db:
+    image: pgrouting/pgrouting:14-3.3-3.4.1
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=concrete_ai_be
+      - ALLOW_IP_RANGE=0.0.0.0/0
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+volumes:
+  db-data:
